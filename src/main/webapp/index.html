@@ -2,20 +2,65 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-    <title>Hello App Engine</title>
+    <title>HWTracker</title>
+    
+    <style>
+	.Cuadricula {
+	  display: grid;
+	  grid-template-columns: auto auto auto;
+	  padding: 20px;
+	}
+	
+	.Contenedor {
+	  border: 5px solid rgba(0, 0, 0, 0.8);
+	  padding: 20x;
+	  font-size: 30px;
+	  text-align: center;
+	}
+	</style>
+    
   </head>
 
   <body>
     <h1>HWTracker</h1>
     <h2>Tu mejor comparador de hardware</h2>
 
+	<div class="Cuadricula">
+	  <div class="Contenedor">
+	  	<p>Procesadores</p>
+	  </div>
+	  <div class="Contenedor">
+  		<p>Placas base</p>
+	  </div>
+	  <div class="Contenedor">
+	  	<p>Memorias RAM</p>
+	  </div>  
+	  <div class="Contenedor">
+	  	<p>Discos duros</p>
+	  </div>
+	  <div class="Contenedor">
+	  	<p>Tarjetas gráficas</p>
+	  </div>
+	  	
+	  <div class="Contenedor">
+	  	<p>Fuentes de alimentación</p>
+	  </div>  
+	  <div class="Contenedor"></div>
+	  <div class="Contenedor"></div>
+	  <div class="Contenedor"></div>  
+	</div>
+
+	
+	<!-- 
     <table>
       <tr>
         <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
       </tr>
       <tr>
         <td><a href='/hello'>The servlet</a></td>
+      
       </tr>
     </table>
+    -->
   </body>
 </html>
