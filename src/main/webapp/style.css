@@ -1,2 +1,24 @@
 @charset "ISO-8859-1";
 
+body {
+	background-color: #101010;
+	color: 	#FFFFFF;
+}
+
+.Cuadricula {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 20px;
+}
+	
+.Contenedor {
+  padding: 20x;
+  font-size: 30px;
+  text-align: center;
+}
+
+.header {
+	color: white;
+	text-align: center;
+	height: 100px;
+}
