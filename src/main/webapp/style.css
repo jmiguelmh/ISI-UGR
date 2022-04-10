@@ -15,10 +15,12 @@ body {
   padding: 20x;
   font-size: 30px;
   text-align: center;
+  width: 450px;
+  height: 450x;
+  padding-bottom: 50px;
 }
 
 .header {
 	color: white;
-	text-align: center;
 	height: 100px;
 }
