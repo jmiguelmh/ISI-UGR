@@ -24,3 +24,16 @@ body {
 	color: white;
 	height: 100px;
 }
+
+.search-box{
+	float: left;
+	padding: 5px;
+	margin: 5px;	
+	width: 25%;
+}
+
+.search-button{
+	float: left;
+	padding: 5px;
+	margin: 5px;
+}
