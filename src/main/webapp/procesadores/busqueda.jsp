@@ -39,7 +39,8 @@
 			for(int i=0 ; i<listaProductos.size() ; i++){
 				Producto p = listaProductos.get(i);
 				
-				out.println("<li><h3>" + "Nombre: " + p.getNombre() + " Precio: " + p.getPrecio()+ " €" + "</h3></li>");
+				// System.out.println("Enlace: " + p.getUrlProducto());
+				out.println("<li><h3>" + "Nombre: " + p.getNombre() + " Precio: " + p.getPrecio()+ " €" + "<a href=" + p.getUrlProducto() + ">Enlace</a>" + "</h3></li>");
 			}
 		%>
 	</ul>

@@ -24,14 +24,12 @@ public class Scraping {
 		String urlPage = url1 + this.producto;
 				  
 		System.out.println("Comprobando entradas de: " + urlPage);
-		Document document = getHtmlDocument(urlPage);
-		System.out.println(document);
 		 
 		// Compruebo si me da un 200 al hacer la petición
 		if (getStatusConnectionCode(urlPage) == 200) {
 
 			// Obtengo el HTML de la web en un objeto Document2
-			document = getHtmlDocument(urlPage);
+			Document document = getHtmlDocument(urlPage);
 		  
 			// Busco todas las historias de meneame que estan dentro de:
 			Elements entradas = document.select("div.sc-eMrmnt.hQPnfu.product-card");
@@ -63,8 +61,63 @@ public class Scraping {
 		}     
 	}
 	
+	private void buscarVSGamers() throws IOException {
+		String url1 = "https://www.vsgamers.es/search?q=";
+		String urlPage = url1 + this.producto;
+				  
+		System.out.println("Comprobando entradas de: " + urlPage);
+		 
+		if (getStatusConnectionCode(urlPage) == 200) {
+
+			Document document = getHtmlDocument(urlPage);
+
+			Elements entradas = document.select("div.vs-product-card");
+		  
+			for (Element elem : entradas) {
+				String titulo = "";
+				String precio = "";
+				String link = "";
+				String urlImagen = "";
+		
+				titulo = elem.getElementsByClass("vs-product-card-title").text();
+				precio = elem.getElementsByClass("vs-product-card-prices-price").text();
+				
+				String[] partes = precio.split(" ");
+				
+				float precioNumerico = 0.0f;
+				StringBuilder precioAux = new StringBuilder(partes[0]);
+				
+				try {
+					precioAux.deleteCharAt(precioAux.indexOf("."));
+				} catch (Exception e) {
+					System.out.println("Precio " + precioAux.toString() + ", menor que 1000");
+				}
+				
+				String precioCorrecto = precioAux.toString();
+				precioCorrecto = precioCorrecto.replace(",", ".");
+				
+				try {
+					precioNumerico = Float.parseFloat(precioCorrecto);
+				} catch (Exception e) {
+					System.out.println("No se puede convertir en float " + partes[0]);
+				}
+			
+
+
+				link = "https://www.vsgamers.es" + elem.getElementsByTag("a").attr("href");
+				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
+				
+				Producto p = new Producto(titulo, link, urlImagen, precioNumerico);
+				listaProductos.add(p);	
+			}               
+		}else{
+			System.out.println("El Status Code no es OK es: "+getStatusConnectionCode(urlPage));
+		}     
+	}
+	
 	public void buscar() throws IOException {
-		buscarPcComponentes();
+		// buscarPcComponentes();
+		buscarVSGamers();
 	}
 	
 	public static int getStatusConnectionCode(String url) throws IOException {
