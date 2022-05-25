@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="../style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
     <title>HWTracker</title>
     
   </head>
 
   <body>
     <div class="header">
-    	<h1>Procesadores</h1>
+    	<h1>HWTracker</h1>
     </div>
     
     <form action="busqueda.jsp" method="get" class="search-form">

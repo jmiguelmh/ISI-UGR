@@ -11,49 +11,49 @@ import java.util.ArrayList;
 
 public class Scraping {
 	String producto;
-
 	ArrayList<Producto> listaProductos;
 	
 	public Scraping(String producto) {
-		this.producto = producto.replaceAll("\\s+","%20");;
+		this.producto = producto.replaceAll("\\s+","%20");
 		listaProductos = new ArrayList<>();
 	}
 	
-	private void buscarPcComponentes() throws IOException {
-		String url1 = "https://www.pccomponentes.com/buscar/?query=";
-		String urlPage = url1 + this.producto;
+	private void buscarPcBox() throws IOException {
+		String url1 = "https://www.pcbox.com/";
+		String urlPage = url1 + this.producto + "?_q=" + this.producto + "&map=ft";
 				  
 		System.out.println("Comprobando entradas de: " + urlPage);
 		 
-		// Compruebo si me da un 200 al hacer la petición
 		if (getStatusConnectionCode(urlPage) == 200) {
 
-			// Obtengo el HTML de la web en un objeto Document2
 			Document document = getHtmlDocument(urlPage);
-		  
-			// Busco todas las historias de meneame que estan dentro de:
-			Elements entradas = document.select("div.sc-eMrmnt.hQPnfu.product-card");
-		  
-			// Parseo cada una de las entradas
+
+			Elements entradas = document.select("div.vtex-search-result-3-x-galleryItem.vtex-search-result-3-x-galleryItem--product-gallery.vtex-search-result-3-x-galleryItem--normal.vtex-search-result-3-x-galleryItem--product-gallery--normal.vtex-search-result-3-x-galleryItem--grid.vtex-search-result-3-x-galleryItem--product-gallery--grid.pa4");
+			System.out.println(entradas.size());
 			for (Element elem : entradas) {
 				String titulo = "";
 				String precio = "";
 				String link = "";
 				String urlImagen = "";
 		
-				//Examinando el código HTML, se obtiene la información que nos interesa,
-				//la cual se encuentra entre etiquetas que tienen como clase estas descripciones
-				titulo = elem.getElementsByClass("sc-fYdeDz gTWfKO").text();
-				precio = elem.getElementsByClass("sc-hqUeQp cAFWDp").text();
+				titulo = elem.getElementsByClass("vtex-product-summary-2-x-nameContainer flex items-start justify-center pv6").text();
+				precio = elem.getElementsByClass("vtex-product-price-1-x-currencyInteger vtex-product-price-1-x-currencyInteger--summary-selling-price").text();
+				precio = precio + "." + elem.getElementsByClass("vtex-product-price-1-x-currencyFraction vtex-product-price-1-x-currencyFraction--summary-selling-price").text();
 
-			
-				//El link del producto se extrae accediendo a la etiqueta <a> y al atributo href. 
-				//Se ha tenido que añadir 'https://www.hipercor.es' a la URL ya que sólo devuelve
-				//la parte restante de la URL.
+				
+				float precioNumerico = 0.0f;
+				
+				
+				try {
+					precioNumerico = Float.parseFloat(precio);
+				} catch (Exception e) {
+					System.out.println("No se puede convertir en float " + precio);
+				}
+				
 				link = elem.getElementsByTag("a").attr("href");
 				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
 				
-				Producto p = new Producto(titulo, link, urlImagen, Float.parseFloat(precio));
+				Producto p = new Producto(titulo, link, urlImagen, "pcbox_logo.png", precioNumerico);
 				listaProductos.add(p);	
 			}               
 		}else{
@@ -107,7 +107,7 @@ public class Scraping {
 				link = "https://www.vsgamers.es" + elem.getElementsByTag("a").attr("href");
 				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
 				
-				Producto p = new Producto(titulo, link, urlImagen, precioNumerico);
+				Producto p = new Producto(titulo, link, urlImagen, "vsgamers_logo.png", precioNumerico);
 				listaProductos.add(p);	
 			}               
 		}else{
@@ -116,8 +116,8 @@ public class Scraping {
 	}
 	
 	public void buscar() throws IOException {
-		// buscarPcComponentes();
-		buscarVSGamers();
+		buscarPcBox();
+		//buscarVSGamers();
 	}
 	
 	public static int getStatusConnectionCode(String url) throws IOException {

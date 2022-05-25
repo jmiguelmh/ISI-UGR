@@ -30,17 +30,17 @@ public class Busqueda {
 		Scraping s = new Scraping(producto);
 		s.buscar();
 		
-		listaProductos = s.getListaProductos();
+		listaProductos.addAll(s.getListaProductos());
 	}
 	
-	/*
+	
 	private void busquedaAmazon() throws IOException, ParserConfigurationException, SAXException {
-		JavaCodeSnippet jcs = new JavaCodeSnippet(producto);
-		jcs.buscarAmazon();
+		RainforestAPI api = new RainforestAPI(producto);
+		api.buscar();
 		
-		listaProductos.addAll(jcs.getListaProductos());	
+		listaProductos.addAll(api.getListaProductos());
 	}
-	*/
+	
 	
 	public void busqueda() throws IOException, ParserConfigurationException, SAXException {
 		busquedaScraping();
