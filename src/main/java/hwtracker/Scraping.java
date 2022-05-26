@@ -14,7 +14,8 @@ public class Scraping {
 	ArrayList<Producto> listaProductos;
 	
 	public Scraping(String producto) {
-		this.producto = producto.replaceAll("\\s+","%20");
+		String[] partes = producto.split(" ");
+		this.producto = partes[0];
 		listaProductos = new ArrayList<>();
 	}
 	
@@ -29,7 +30,6 @@ public class Scraping {
 			Document document = getHtmlDocument(urlPage);
 
 			Elements entradas = document.select("div.vtex-search-result-3-x-galleryItem.vtex-search-result-3-x-galleryItem--product-gallery.vtex-search-result-3-x-galleryItem--normal.vtex-search-result-3-x-galleryItem--product-gallery--normal.vtex-search-result-3-x-galleryItem--grid.vtex-search-result-3-x-galleryItem--product-gallery--grid.pa4");
-			System.out.println(entradas.size());
 			for (Element elem : entradas) {
 				String titulo = "";
 				String precio = "";
@@ -50,9 +50,10 @@ public class Scraping {
 					System.out.println("No se puede convertir en float " + precio);
 				}
 				
-				link = elem.getElementsByTag("a").attr("href");
+				link = "https://www.pcbox.com" + elem.getElementsByTag("a").attr("href");
 				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
 				
+				System.out.println(link);
 				Producto p = new Producto(titulo, link, urlImagen, "pcbox_logo.png", precioNumerico);
 				listaProductos.add(p);	
 			}               
@@ -117,7 +118,7 @@ public class Scraping {
 	
 	public void buscar() throws IOException {
 		buscarPcBox();
-		//buscarVSGamers();
+		buscarVSGamers();
 	}
 	
 	public static int getStatusConnectionCode(String url) throws IOException {

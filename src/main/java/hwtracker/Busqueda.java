@@ -43,8 +43,8 @@ public class Busqueda {
 	
 	
 	public void busqueda() throws IOException, ParserConfigurationException, SAXException {
+		busquedaAmazon();
 		busquedaScraping();
-		//busquedaAmazon();
 		
 		Collections.sort(listaProductos, compararPorPrecio);
 	}
