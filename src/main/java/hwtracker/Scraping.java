@@ -11,17 +11,19 @@ import java.util.ArrayList;
 
 public class Scraping {
 	String producto;
+	String productoPCBox;
 	ArrayList<Producto> listaProductos;
 	
 	public Scraping(String producto) {
+		this.producto = producto.replaceAll("\\s+","%20");
 		String[] partes = producto.split(" ");
-		this.producto = partes[0];
+		this.productoPCBox = partes[0];
 		listaProductos = new ArrayList<>();
 	}
 	
 	private void buscarPcBox() throws IOException {
 		String url1 = "https://www.pcbox.com/";
-		String urlPage = url1 + this.producto + "?_q=" + this.producto + "&map=ft";
+		String urlPage = url1 + this.productoPCBox + "?_q=" + this.productoPCBox + "&map=ft";
 				  
 		System.out.println("Comprobando entradas de: " + urlPage);
 		 
@@ -47,13 +49,13 @@ public class Scraping {
 				try {
 					precioNumerico = Float.parseFloat(precio);
 				} catch (Exception e) {
-					System.out.println("No se puede convertir en float " + precio);
+					//System.out.println("No se puede convertir en float " + precio);
 				}
 				
 				link = "https://www.pcbox.com" + elem.getElementsByTag("a").attr("href");
-				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
+				urlImagen = elem.getElementsByTag("img").attr("src");
 				
-				System.out.println(link);
+				//System.out.println(link);
 				Producto p = new Producto(titulo, link, urlImagen, "pcbox_logo.png", precioNumerico);
 				listaProductos.add(p);	
 			}               
@@ -91,7 +93,7 @@ public class Scraping {
 				try {
 					precioAux.deleteCharAt(precioAux.indexOf("."));
 				} catch (Exception e) {
-					System.out.println("Precio " + precioAux.toString() + ", menor que 1000");
+					// System.out.println("Precio " + precioAux.toString() + ", menor que 1000");
 				}
 				
 				String precioCorrecto = precioAux.toString();
@@ -100,13 +102,13 @@ public class Scraping {
 				try {
 					precioNumerico = Float.parseFloat(precioCorrecto);
 				} catch (Exception e) {
-					System.out.println("No se puede convertir en float " + partes[0]);
+					//System.out.println("No se puede convertir en float " + partes[0]);
 				}
 			
 
 
 				link = "https://www.vsgamers.es" + elem.getElementsByTag("a").attr("href");
-				urlImagen = "https:"+elem.getElementsByTag("img").attr("src");
+				urlImagen = "https://www.vsgamers.es"+elem.getElementsByTag("img").attr("src");
 				
 				Producto p = new Producto(titulo, link, urlImagen, "vsgamers_logo.png", precioNumerico);
 				listaProductos.add(p);	

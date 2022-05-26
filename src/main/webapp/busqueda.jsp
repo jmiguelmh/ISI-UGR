@@ -22,15 +22,16 @@
 
 			<input	type="search" id="busqueda" name="producto" class="search-box" autofocus>
 			<input type="submit" class="search-button" value="Buscar">
-
 		</fieldset>
 	</form>
 	
-	<h2>Productos</h2>
+	<h1>Productos</h1>
 	
 	<ul class="lista-productos">
 		<%
 			String producto = request.getParameter("producto");
+		if (!producto.equals(""))
+		{
 			Busqueda b = new Busqueda(producto);
 			b.busqueda();
 			
@@ -40,10 +41,14 @@
 				Producto p = listaProductos.get(i);
 				
 				// System.out.println("Enlace: " + p.getUrlProducto());
-				String img = "\"><img src=\"./imgs/" + p.getTienda() + "\" alt=\"Enlace\"/>";
+				String imgProducto = "<img src=\"" + p.getUrlImagen() + "\" width=\"50\" height=\"50\"/>";
+				String imgTienda = "\"><img src=\"./imgs/" + p.getTienda() + "\" height=\"50\" alt=\"Enlace\"/>";
 				//System.out.println(listaProductos.size());
-				out.println("<li><h3>" + "Nombre: " + p.getNombre() + " Precio: " + p.getPrecio()+ " €" + "<a href=\"" + p.getUrlProducto() + img + "</a>" + "</h3></li>");
+				out.println("<li><h2>" + imgProducto + "\t" + p.getNombre() + " Precio: " + p.getPrecio()+ " €\t" + "<a href=\"" + p.getUrlProducto() + imgTienda + "</a>" + "</h2></li>");
 			}
+		} else {
+			out.println("<h3>Introduzca un producto para buscar</h3>");
+		}
 		%>
 	</ul>
 	

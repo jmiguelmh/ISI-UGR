@@ -23,6 +23,7 @@ body {
 .header {
 	color: white;
 	height: 100px;
+	font-size:30px;
 }
 
 .search-box{
