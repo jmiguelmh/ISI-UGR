@@ -46,6 +46,34 @@ public class Busqueda {
 		busquedaAmazon();
 		busquedaScraping();
 		
+		String palabras[] = producto.split(" ");
+		
+		for (int i = 0; i < palabras.length; i++) {
+			palabras[i] = palabras[i].toUpperCase();
+			System.out.println(palabras[i]);
+		}
+		
+		ArrayList<Producto> listaAuxiliar = new ArrayList<>();
+		
+		for (int i = 0; i < listaProductos.size(); i++){
+			boolean palabraEncontrada = false;
+			for(int j = 0; j < palabras.length && !palabraEncontrada; j++) {
+				String nombre = listaProductos.get(i).getNombre().toUpperCase();
+				if(nombre.contains(palabras[j])) {
+					palabraEncontrada = true;
+				}
+			}
+			
+			if(palabraEncontrada) {
+				palabraEncontrada = false;
+				listaAuxiliar.add(listaProductos.get(i));
+			}
+				
+		}
+		
+		listaProductos.clear();
+		listaProductos = listaAuxiliar;
+		
 		Collections.sort(listaProductos, compararPorPrecio);
 	}
 	
