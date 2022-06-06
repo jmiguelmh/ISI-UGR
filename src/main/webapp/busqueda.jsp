@@ -29,14 +29,21 @@
 	
 	<ul class="lista-productos">
 		<%
-			String producto = request.getParameter("producto");
+		// Se obtiene el nombre del producto escrito en la barra de busqueda
+		String producto = request.getParameter("producto");
+		
+		// Se comprueba que hay un texto para buscar
 		if (!producto.equals(""))
 		{
+			// Se crea un objeto Busqueda y se llama al metodo buscar
 			Busqueda b = new Busqueda(producto);
 			b.busqueda();
 			
+			// Se obtienen la lista de productos encontrados
 			ArrayList<Producto> listaProductos = b.getListaProductos();
 			
+			// Se inserta cada producto en la lista para mostralo en el HTML, para cada producto se muestra
+			// imagen, nombre, precio y tienda que funciona tambien de enlace para ir a la web de compra
 			for(int i=0 ; i<listaProductos.size() ; i++){
 				Producto p = listaProductos.get(i);
 				
